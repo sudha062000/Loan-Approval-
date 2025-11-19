@@ -3,7 +3,7 @@ import joblib
 import pandas as pd
 from flask_cors import CORS
 
-app = Flask(__name__)
+app = Flask(_name_)
 CORS(app)  # allow calls from your frontend in dev
 
 # =========================
@@ -23,6 +23,16 @@ print(f"   → Best model name    : {best_model_name}")
 print(f"   → Selection metric   : {selection_metric}")
 print(f"   → Numeric features   : {numeric_features}")
 print(f"   → Categorical features: {categorical_features}")
+
+
+# 🔹 ROOT ROUTE (this is what stops 404 on "/")
+@app.route("/", methods=["GET"])
+def home():
+    return jsonify({
+        "message": "Loan Approval API is running on Render.",
+        "endpoints": ["/health", "/model-info", "/predict (POST)"],
+        "model_used": best_model_name,
+    }), 200
 
 
 @app.route("/health", methods=["GET"])
@@ -48,22 +58,6 @@ def model_info():
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    """
-    Expect JSON like:
-    {
-      "ApplicantIncome": 5000,
-      "CoapplicantIncome": 2000,
-      "LoanAmount": 150,
-      "Loan_Amount_Term": 360,
-      "Gender": "Male",
-      "Married": "Yes",
-      "Dependents": "1",
-      "Education": "Graduate",
-      "Self_Employed": "No",
-      "Credit_History": "1.0",
-      "Property_Area": "Urban"
-    }
-    """
     data = request.get_json()
 
     try:
@@ -74,18 +68,15 @@ def predict():
             val = data.get(col)
             row[col] = float(val) if val not in [None, ""] else None
 
-        # categorical features -> string (can be None)
+        # categorical features -> string
         for col in categorical_features:
             row[col] = data.get(col)
 
-        # Create single-row DataFrame
         X_input = pd.DataFrame([row])
 
-        # Predict with the loaded pipeline
         pred = pipeline.predict(X_input)[0]
         proba = pipeline.predict_proba(X_input)[0, 1]
 
-        # Debug log
         print("DEBUG row:", row, "→ predicted:", pred, "probability:", proba)
 
         return jsonify(
@@ -101,5 +92,5 @@ def predict():
         return jsonify({"error": str(e)}), 400
 
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     app.run(debug=True)
