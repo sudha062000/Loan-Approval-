@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Loan Approval Predictor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center">
+  <div class="w-full max-w-3xl bg-slate-900 rounded-2xl shadow-lg p-8">
+    <h1 class="text-2xl font-bold mb-4 text-emerald-400">
+      Loan Approval Prediction
+    </h1>
+    <p class="text-slate-300 mb-6 text-sm">
+      Fill the details and see if the loan is likely to be approved.
+    </p>
+
+    <form id="loan-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Numeric fields -->
+      <div>
+        <label class="block text-sm mb-1">Applicant Income</label>
+        <input name="ApplicantIncome" type="number" class="w-full rounded-lg px-3 py-2 bg-slate-800 border border-slate-600" required />
+      </div>
+      <div>
+        <label class="block text-sm mb-1">Coapplicant Income</label>
+        <input name="CoapplicantIncome" type="number" class="w-full rounded-lg px-3 py-2 bg-slate-800 border border-slate-600" />
+      </div>
+      <div>
+        <label class="block text-sm mb-1">Loan Amount</label>
+        <input name="LoanAmount" type="number" class="w-full rounded-lg px-3 py-2 bg-slate-800 border border-slate-600" required />
+      </div>
+      <div>
+        <label class="block text-sm mb-1">Loan Term (days)</label>
+        <input name="Loan_Amount_Term" type="number" class="w-full rounded-lg px-3 py-2 bg-slate-800 border border-slate-600" required />
+      </div>
+
+      <!-- Categorical fields -->
+      <div>
+        <label class="block text-sm mb-1">Gender</label>
+        <select name="Gender" class="w-full rounded-lg px-3 py-2 bg-slate-800 border border-slate-600">
+          <option value="">Select</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm mb-1">Married</label>
+        <select name="Married" class="w-full rounded-lg px-3 py-2 bg-slate-800 border border-slate-600">
+          <option value="">Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm mb-1">Dependents</label>
+        <select name="Dependents" class="w-full rounded-lg px-3 py-2 bg-slate-800 border border-slate-600">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3+">3+</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm mb-1">Education</label>
+        <select name="Education" class="w-full rounded-lg px-3 py-2 bg-slate-800 border border-slate-600">
+          <option value="Graduate">Graduate</option>
+          <option value="Not Graduate">Not Graduate</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm mb-1">Self Employed</label>
+        <select name="Self_Employed" class="w-full rounded-lg px-3 py-2 bg-slate-800 border border-slate-600">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm mb-1">Credit History</label>
+        <select name="Credit_History" class="w-full rounded-lg px-3 py-2 bg-slate-800 border border-slate-600">
+          <option value="1.0">Good (1.0)</option>
+          <option value="0.0">Bad (0.0)</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm mb-1">Property Area</label>
+        <select name="Property_Area" class="w-full rounded-lg px-3 py-2 bg-slate-800 border border-slate-600">
+          <option value="Urban">Urban</option>
+          <option value="Semiurban">Semiurban</option>
+          <option value="Rural">Rural</option>
+        </select>
+      </div>
+
+      <div class="md:col-span-2 flex items-center justify-between mt-4">
+        <button
+          type="submit"
+          class="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-semibold"
+        >
+          Predict Approval
+        </button>
+        <span id="status" class="text-sm text-slate-400"></span>
+      </div>
+    </form>
+
+    <div id="result-card" class="mt-6 hidden">
+      <div class="p-4 rounded-xl bg-slate-800 border border-slate-700">
+        <p id="result-text" class="text-lg font-semibold"></p>
+        <p id="result-prob" class="text-sm text-slate-300 mt-1"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="./assets/app.js"></script>
+</body>
+</html>
